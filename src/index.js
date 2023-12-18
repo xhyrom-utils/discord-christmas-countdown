@@ -48,7 +48,9 @@ function findLastAdventSunday(date) {
 
 {
   const { days, hours, minutes } = formatTimeUntil(christmas);
-  const sundays = getAdventSundays();
+  const sundays = getAdventSundays().filter(
+    (sunday) => sunday.getTime() >= Date.now()
+  );
 
   await fetch(process.env.WEBHOOK_URL, {
     method: "POST",
@@ -61,7 +63,6 @@ function findLastAdventSunday(date) {
         ``,
         sundays.length !== 0
           ? `🕯️ The remaining Advent Sundays are:\n- ${sundays
-              .filter((sunday) => sunday.getTime() >= Date.now())
               .map((s) => `<t:${Math.floor(s.getTime() / 1000)}:d>`)
               .join("\n- ")}`
           : `🕯️ All the Advent Sundays have passed, and we're in the final stretch.\nLet's spread the holiday cheer and look forward to the joy and warmth that Christmas brings! 🌟`,
