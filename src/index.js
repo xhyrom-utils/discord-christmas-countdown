@@ -52,21 +52,33 @@ function findLastAdventSunday(date) {
     (sunday) => sunday.getTime() >= Date.now()
   );
 
+  let content = [
+    `🎄 With **${days}** days, **${hours}** hours, and **${minutes}** minutes left, Christmas is just around the corner! 🎅`,
+    ``,
+    sundays.length !== 0
+      ? `🕯️ The remaining Advent Sundays are:\n- ${sundays
+          .map((s) => `<t:${Math.floor(s.getTime() / 1000)}:d>`)
+          .join("\n- ")}`
+      : `🕯️ All the Advent Sundays have passed, and we're in the final stretch.\nLet's spread the holiday cheer and look forward to the joy and warmth that Christmas brings! 🌟`,
+  ].join("\n");
+
+  if (days < 0) {
+    content = [
+      "🎄 Merry Christmas! 🎅",
+      "",
+      "🕯️ The long-awaited day has finally arrived, and we’re celebrating the birth of Jesus Christ. 🙏 Let’s rejoice in the gift of God’s love and share it with everyone around us! 🌟",
+      "",
+      "I hope you like it. Have a wonderful Christmas! 🎁",
+    ].join("\n");
+  }
+
   await fetch(process.env.WEBHOOK_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      content: [
-        `🎄 With **${days}** days, **${hours}** hours, and **${minutes}** minutes left, Christmas is just around the corner! 🎅`,
-        ``,
-        sundays.length !== 0
-          ? `🕯️ The remaining Advent Sundays are:\n- ${sundays
-              .map((s) => `<t:${Math.floor(s.getTime() / 1000)}:d>`)
-              .join("\n- ")}`
-          : `🕯️ All the Advent Sundays have passed, and we're in the final stretch.\nLet's spread the holiday cheer and look forward to the joy and warmth that Christmas brings! 🌟`,
-      ].join("\n"),
+      content,
     }),
   });
 }
