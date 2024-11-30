@@ -22,11 +22,11 @@ function getAdventSundays() {
   const now = new Date();
   const year = now.getFullYear();
 
-  const sevenDays = 24 * 60 * 60 * 1000 * 7;
+  const offset = 24 * 60 * 60 * 1000 * 7;
   const fourthAdventSunday = findLastAdventSunday(new Date(year, 11, 23));
-  const thirdAdventSunday = new Date(fourthAdventSunday.getTime() - sevenDays);
-  const secondAdventSunday = new Date(thirdAdventSunday.getTime() - sevenDays);
-  const firstAdventSunday = new Date(secondAdventSunday.getTime() - sevenDays);
+  const thirdAdventSunday = new Date(fourthAdventSunday.getTime() - offset);
+  const secondAdventSunday = new Date(thirdAdventSunday.getTime() - offset);
+  const firstAdventSunday = new Date(secondAdventSunday.getTime() - offset);
 
   return [
     firstAdventSunday,
@@ -57,7 +57,10 @@ async function send() {
     ``,
     sundays.length !== 0
       ? `🕯️ The remaining Advent Sundays are:\n- ${sundays
-          .map((s) => `<t:${Math.floor(s.getTime() / 1000)}:d>`)
+          .map(
+            (s) =>
+              `<t:${Math.floor((s.getTime() - 24 * 60 * 60 * 1000) / 1000)}:d>`,
+          )
           .join("\n- ")}`
       : `🕯️ All the Advent Sundays have passed, and we're in the final stretch.\nLet's spread the holiday cheer and look forward to the joy and warmth that Christmas brings! 🌟`,
   ].join("\n");
@@ -83,6 +86,7 @@ async function send() {
   });
 }
 
+send();
 cron.schedule("0 0 * * *", send, {
   timezone: "Europe/London",
 });
