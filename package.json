@@ -10,5 +10,5 @@
   "keywords": [],
   "author": "xhyrom",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": { "node-cron": "^3.0.3" }
 }

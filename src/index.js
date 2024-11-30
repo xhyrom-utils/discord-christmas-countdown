@@ -1,3 +1,5 @@
+import cron from "node-cron";
+
 const now = new Date();
 const christmas = new Date(`December 24, ${now.getFullYear()} 00:00:00`);
 
@@ -44,7 +46,7 @@ function findLastAdventSunday(date) {
   );
 }
 
-{
+async function send() {
   const { days, hours, minutes } = formatTimeUntil(christmas);
   const sundays = getAdventSundays().filter(
     (sunday) => sunday.getTime() >= Date.now(),
@@ -80,3 +82,7 @@ function findLastAdventSunday(date) {
     }),
   });
 }
+
+cron.schedule("0 0 * * *", send, {
+  timezone: "Europe/London",
+});
