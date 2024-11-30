@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 const now = new Date();
 const christmas = new Date(`December 24, ${now.getFullYear()} 00:00:00`);
 
@@ -42,14 +40,14 @@ function findLastAdventSunday(date) {
   }
 
   return findLastAdventSunday(
-    new Date(now.getFullYear(), 11, date.getDate() - 1)
+    new Date(now.getFullYear(), 11, date.getDate() - 1),
   );
 }
 
 {
   const { days, hours, minutes } = formatTimeUntil(christmas);
   const sundays = getAdventSundays().filter(
-    (sunday) => sunday.getTime() >= Date.now()
+    (sunday) => sunday.getTime() >= Date.now(),
   );
 
   let content = [

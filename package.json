@@ -8,9 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "xHyroM",
+  "author": "xhyrom",
   "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.3.1"
-  }
+  "dependencies": {}
 }
